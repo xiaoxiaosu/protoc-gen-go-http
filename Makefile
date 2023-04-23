@@ -1,3 +1,4 @@
+VERSION=$(shell git describe --tags --always)
 
 .PHONY: build
 # build
