@@ -37,27 +37,35 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 
 		if err := c.Bind(&in{{.Body}}); err != nil {
 			c.AbortWithError(http.StatusBadRequest, err)
+			return
 		}
 		
 		{{- if not (eq .Body "")}}
 		if err := c.BindQuery(&in); err != nil {
 			c.AbortWithError(http.StatusBadRequest, err)
+			return
 		}
 		{{- end}}
 		{{- else}}
 		if err := c.BindQuery(&in{{.Body}}); err != nil {
 			c.AbortWithError(http.StatusBadRequest, err)
+			return
 		}
 		{{- end}}
 		{{- if .HasVars}}
 		if err := c.BindUri(&in); err != nil {
 			c.AbortWithError(http.StatusBadRequest, err)
+			return
 		}
 		{{- end}}
 
 		out, err := srv.{{.Name}}(c, &in)
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+		if c.IsAborted() {
+			return
 		}
 
 		c.JSON(http.StatusOK, out{{.ResponseBody}})
