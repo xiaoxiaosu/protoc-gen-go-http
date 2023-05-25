@@ -67,8 +67,8 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 		if c.IsAborted() {
 			return
 		}
-		out = JsonProto(out)
-		c.JSON(http.StatusOK, out{{.ResponseBody}})
+		res := JsonProto(out)
+		c.JSON(http.StatusOK, res{{.ResponseBody}})
 	}
 }
 
