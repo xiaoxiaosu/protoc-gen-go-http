@@ -2,6 +2,9 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 	"strings"
 	"text/template"
 )
@@ -67,7 +70,7 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 		if c.IsAborted() {
 			return
 		}
-
+		out = jsonProto(out)
 		c.JSON(http.StatusOK, out{{.ResponseBody}})
 	}
 }
@@ -113,4 +116,18 @@ func (s *serviceDesc) execute() string {
 		panic(err)
 	}
 	return strings.Trim(buf.String(), "\r\n")
+}
+
+func jsonProto(data interface{}) interface{} {
+	if message, ok := data.(proto.Message); ok {
+		var buffer bytes.Buffer
+		var newData interface{}
+		t := jsonpb.Marshaler{EmitDefaults: true, OrigName: true}
+		t.Marshal(&buffer, message)
+		json.Unmarshal(buffer.Bytes(), &newData)
+		return newData
+	} else {
+		return data
+	}
+
 }
