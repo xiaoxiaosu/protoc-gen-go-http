@@ -67,12 +67,12 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 		if c.IsAborted() {
 			return
 		}
-		out = jsonProto(out)
+		out = JsonProto(out)
 		c.JSON(http.StatusOK, out{{.ResponseBody}})
 	}
 }
 
-func jsonProto(data interface{}) interface{} {
+func JsonProto(data interface{}) interface{} {
 	if message, ok := data.(proto.Message); ok {
 		var buffer bytes.Buffer
 		var newData interface{}
