@@ -19,6 +19,7 @@ const (
 	jsonPacakge   = protogen.GoImportPath("encoding/json")
 	jsonpbPackage = protogen.GoImportPath("github.com/golang/protobuf/jsonpb")
 	protoPackage  = protogen.GoImportPath("github.com/golang/protobuf/proto")
+	bytesPackage  = protogen.GoImportPath("bytes")
 )
 const deprecationComment = "// Deprecated: Do not use."
 
@@ -58,6 +59,7 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("var _ = new(", jsonPacakge.Ident("Encoder"), ")")
 	g.P("var _ = new(", jsonpbPackage.Ident("Marshaler"), ")")
 	g.P("var _ = new(", protoPackage.Ident("Message"), ")")
+	g.P("var _ = new(", bytesPackage.Ident("Buffer"), ")")
 	g.P()
 
 	for _, service := range file.Services {
