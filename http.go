@@ -57,7 +57,7 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("var _ = new(", httpPackage.Ident("Request"), ")")
 	g.P("var _ = new(", jsonPacakge.Ident("Encoder"), ")")
 	g.P("var _ = new(", jsonpbPackage.Ident("Marshaler"), ")")
-	g.P("var _ = new(", httpPackage.Ident("Message"), ")")
+	g.P("var _ = new(", protoPackage.Ident("Message"), ")")
 	g.P()
 
 	for _, service := range file.Services {
