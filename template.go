@@ -72,6 +72,7 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 	}
 }
 
+{{end}}
 func JsonProto(data interface{}) interface{} {
 	if message, ok := data.(proto.Message); ok {
 		var buffer bytes.Buffer
@@ -85,9 +86,6 @@ func JsonProto(data interface{}) interface{} {
 	}
 
 }
-
-
-{{end}}
 `
 
 type serviceDesc struct {
