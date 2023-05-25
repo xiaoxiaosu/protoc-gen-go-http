@@ -71,6 +71,7 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 
 		var buffer bytes.Buffer
 		var newData interface{}
+		message := out.(proto.Message)
 		jpMarshaler := jsonpb.Marshaler{EmitDefaults: true, OrigName: true}
 		jpMarshaler.Marshal(&buffer, message)
 		json.Unmarshal(buffer.Bytes(), &newData)
@@ -78,8 +79,8 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 		c.JSON(http.StatusOK, newData{{.ResponseBody}})
 	}
 }
-
 {{end}}
+
 `
 
 type serviceDesc struct {
