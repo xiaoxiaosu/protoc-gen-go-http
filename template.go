@@ -8,12 +8,6 @@ import (
 
 var httpTemplate = `
 
-import (
-	"encoding/json"
-	"github.com/golang/protobuf/jsonpb"
-	"github.com/golang/protobuf/proto"
-)
-
 {{$svrType := .ServiceType}}
 {{$svrName := .ServiceName}}
 

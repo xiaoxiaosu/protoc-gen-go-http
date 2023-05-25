@@ -14,8 +14,11 @@ import (
 )
 
 const (
-	ginPackage  = protogen.GoImportPath("github.com/gin-gonic/gin")
-	httpPackage = protogen.GoImportPath("net/http")
+	ginPackage    = protogen.GoImportPath("github.com/gin-gonic/gin")
+	httpPackage   = protogen.GoImportPath("net/http")
+	jsonPacakge   = protogen.GoImportPath("encoding/json")
+	jsonpbPackage = protogen.GoImportPath("github.com/golang/protobuf/jsonpb")
+	protoPackage  = protogen.GoImportPath("github.com/golang/protobuf/proto")
 )
 const deprecationComment = "// Deprecated: Do not use."
 
@@ -52,6 +55,9 @@ func generateFileContent(gen *protogen.Plugin, file *protogen.File, g *protogen.
 	g.P("// This is a compile-time assertion to ensure that this generated file")
 	g.P("var _ = new(", ginPackage.Ident("Engine"), ")")
 	g.P("var _ = new(", httpPackage.Ident("Request"), ")")
+	g.P("var _ = new(", jsonPacakge.Ident("Encoder"), ")")
+	g.P("var _ = new(", jsonpbPackage.Ident("Marshaler"), ")")
+	g.P("var _ = new(", httpPackage.Ident("Message"), ")")
 	g.P()
 
 	for _, service := range file.Services {
