@@ -68,25 +68,18 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 		if c.IsAborted() {
 			return
 		}
-		res := JsonProto(out)
-		c.JSON(http.StatusOK, res{{.ResponseBody}})
+
+		var buffer bytes.Buffer
+		var newData interface{}
+		jpMarshaler := jsonpb.Marshaler{EmitDefaults: true, OrigName: true}
+		jpMarshaler.Marshal(&buffer, message)
+		json.Unmarshal(buffer.Bytes(), &newData)
+
+		c.JSON(http.StatusOK, newData{{.ResponseBody}})
 	}
 }
 
 {{end}}
-func JsonProto(data interface{}) interface{} {
-	if message, ok := data.(proto.Message); ok {
-		var buffer bytes.Buffer
-		var newData interface{}
-		t := jsonpb.Marshaler{EmitDefaults: true, OrigName: true}
-		t.Marshal(&buffer, message)
-		json.Unmarshal(buffer.Bytes(), &newData)
-		return newData
-	} else {
-		return data
-	}
-
-}
 `
 
 type serviceDesc struct {
