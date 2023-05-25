@@ -1,5 +1,4 @@
-module github.com/fynntang/protoc-gen-go-http
-
+module github.com/xiaoxiaosu/protoc-gen-go-http
 go 1.20
 
 require (
