@@ -61,7 +61,7 @@ func _{{$svrType}}_{{.Name}}{{.Num}}_HTTP_Handler(srv {{$svrType}}HTTPServer) gi
 
 		out, err := srv.{{.Name}}(c, &in)
 		if err != nil {
-			c.AbortWithError(http.StatusInternalServerError, err)
+			c.AbortWithError(http.StatusOK, err)
 			return
 		}
 		if c.IsAborted() {
